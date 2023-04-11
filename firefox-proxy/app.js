@@ -6,7 +6,7 @@ const [securedProtocol, serverContainerName, serverPort] = process.argv.slice(2)
 if (securedProtocol && serverContainerName && serverPort) {
     const protocol = securedProtocol === 'true' ? 'https' : 'http';
     const myProxy = createProxyMiddleware(`${protocol}://${serverContainerName}:${serverPort}`, { changeOrigin: true });
-
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
     const app = express();
     app.use(myProxy);
 
